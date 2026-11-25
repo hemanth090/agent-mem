@@ -14,6 +14,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://hemanth090.github.io/agent-mem/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="hero.jpg" as="image" media="(min-width:701px)">
+<link rel="preload" href="hero-sm.jpg" as="image" media="(max-width:700px)">
 <link rel="preload" href="fonts/InterTight-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/JetBrainsMono-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -100,7 +102,13 @@ body.ready .hero h1 .ln > span{transform:none}
 .hero .fx{opacity:0;transform:translateY(14px);transition:opacity .8s var(--ease) .25s,transform .8s var(--ease) .25s}
 body.ready .hero .fx{opacity:1;transform:none}
 
-.hero{padding-bottom:clamp(24px,4vw,48px)}
+/* One seascape, cut at the horizon. The hero keeps the sky and mountains; the footer gets the ocean. */
+.hero{position:relative;isolation:isolate;overflow:clip;--ih:max(56.25vw,400px);padding-bottom:calc(var(--ih) * .3)}
+.hero-bg{position:absolute;left:0;right:0;bottom:0;height:calc(var(--ih) * .72);z-index:-1;pointer-events:none;
+  background:url("hero.jpg") 62% 0/auto var(--ih) no-repeat;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 24%,#000 80%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 24%,#000 80%,transparent 100%)}
+@media (max-width:700px){.hero-bg{background-image:url("hero-sm.jpg");background-position:66% 0}}
 
 /* ---------- agents row ---------- */
 .agents{padding:clamp(40px,6vw,72px) 0 0}
@@ -193,11 +201,11 @@ code.i{font-size:14px;white-space:nowrap}
 .close h2{max-width:16ch}
 .close .btn-row{margin-top:32px}
 
-/* footer: the seascape from the mountains down to the waves. Copy sits on the blank sky above it. */
-footer{--scene:clamp(250px,34vw,540px);position:relative;isolation:isolate;overflow:clip;background:#faf9f3;padding:clamp(56px,7vw,96px) 0 var(--scene);color:var(--ink-2);font-size:15px}
+/* footer: the ocean half of the same picture (from just under the mountains down). Copy sits on the blank cream above it. */
+footer{--ih:max(66vw,480px);--scene:calc(var(--ih) * .42);position:relative;isolation:isolate;overflow:clip;background:#faf9f3;padding:clamp(56px,7vw,96px) 0 var(--scene);color:var(--ink-2);font-size:15px}
 footer::before{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--scene);z-index:-1;pointer-events:none;
-  background:url("hero.jpg") 62% 100%/cover no-repeat;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 30%);mask-image:linear-gradient(to bottom,transparent 0,#000 30%)}
+  background:url("hero.jpg") 62% 100%/auto var(--ih) no-repeat;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34%);mask-image:linear-gradient(to bottom,transparent 0,#000 34%)}
 @media (max-width:700px){footer::before{background-image:url("hero-sm.jpg");background-position:66% 100%}}
 .foot-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
 .foot-brand .logo{color:var(--ink)}
@@ -274,6 +282,7 @@ footer li a:hover{color:var(--ink)}
 
 <main id="main">
 <section class="hero" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true"></div>
   <div class="wrap">
     <h1 id="hero-title"><span class="ln"><span>Shared memory</span></span><span class="ln"><span>for coding agents.</span></span></h1>
     <p class="lead fx">A local memory server for Claude Code, OpenCode, Codex and Antigravity. Recall takes under 10 ms, and nothing leaves your machine.</p>
