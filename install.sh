@@ -35,6 +35,9 @@ detect_target() {
     x86_64|amd64)  arch_part="x86_64" ;;
     *) die "unsupported CPU architecture '$arch'" ;;
   esac
+  if [ "$os" = "Darwin" ] && [ "$arch_part" = "x86_64" ]; then
+    die "Intel Macs are not supported by the prebuilt binaries (no ONNX Runtime build exists for x86_64 macOS). Build from source instead: cargo build --release && target/release/agent-mem install"
+  fi
   printf '%s-%s' "$arch_part" "$os_part"
 }
 

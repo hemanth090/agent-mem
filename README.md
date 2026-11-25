@@ -15,7 +15,7 @@ A local, single-binary memory engine shared by coding agents: **Claude Code, Ope
 
 ## Install
 
-**One line (macOS / Linux):**
+**One line (Apple-silicon macOS, Linux x86_64 / arm64):**
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/hemanth090/agent-mem/main/install.sh | sh
@@ -138,7 +138,7 @@ cargo clippy --workspace --all-targets -- -D warnings
 
 ### Publishing a release (maintainers)
 
-Push a tag (`git tag v0.1.0 && git push origin v0.1.0`). `.github/workflows/release.yml` builds archives for Apple-silicon macOS, Linux x86_64 and Linux arm64 (Intel macOS is best-effort), writes `.sha256` files and attaches them to the release; `install.sh` downloads from `releases/latest`. Windows is not supported yet.
+Push a tag (`git tag v0.1.0 && git push origin v0.1.0`). `.github/workflows/release.yml` builds archives for Apple-silicon macOS, Linux x86_64 and Linux arm64, writes `.sha256` files and attaches them to the release; `install.sh` downloads from `releases/latest`. Intel macOS and Windows are not supported by the prebuilt binaries (no ONNX Runtime build for Intel macOS; Windows is untested). Intel Mac users can build from source.
 
 Release builds disable LTO on purpose: with LTO the macOS link fails on a symbol the prebuilt ONNX Runtime needs. See the comment in the workspace `Cargo.toml`.
 
