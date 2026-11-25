@@ -37,6 +37,7 @@
   --font-sans:"Inter Tight","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
   --font-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
   --maxw:1120px;
+  --navh:72px;
   --pad:clamp(20px,4vw,48px);
   --ease:cubic-bezier(.22,.61,.21,1);
 }
@@ -55,7 +56,7 @@ svg{display:block}
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 /* ---------- nav ---------- */
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:72px}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:var(--navh)}
 .logo{display:inline-flex;align-items:center;gap:10px;font:600 20px/1 var(--font-sans);letter-spacing:-.025em}
 .logo svg{width:30px;height:30px;overflow:visible}
 .logo .r2,.logo .dot{transform-box:fill-box;transform-origin:center;transition:transform .5s var(--ease)}
@@ -92,26 +93,32 @@ svg{display:block}
 /* ---------- hero ---------- */
 .hero{padding-top:clamp(32px,6vw,72px)}
 .hero{text-align:center}
-.hero h1{max-width:13ch;margin-inline:auto;font-weight:500;font-size:clamp(42px,7vw,88px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
+.hero h1{max-width:13ch;margin-inline:auto;font-weight:500;font-size:clamp(38px,min(7vw,12svh),88px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
 .hero h1 .ln > span{display:inline-block;transform:translateY(110%);transition:transform 1s var(--ease)}
 .hero h1 .ln:nth-child(2) > span{transition-delay:.1s}
 body.ready .hero h1 .ln > span{transform:none}
-.lead{margin-top:24px;margin-inline:auto;max-width:48ch;text-wrap:balance;font-size:clamp(16px,1.5vw,19px);line-height:1.6;color:var(--ink-2)}
-.hero .btn-row{margin-top:32px;justify-content:center}
+.lead{margin-top:clamp(12px,2.6svh,24px);margin-inline:auto;max-width:48ch;text-wrap:balance;font-size:clamp(16px,1.5vw,19px);line-height:1.6;color:var(--ink-2)}
+.hero .btn-row{margin-top:clamp(18px,3.6svh,32px);justify-content:center}
 .hero .fx{opacity:0;transform:translateY(14px);transition:opacity .8s var(--ease) .25s,transform .8s var(--ease) .25s}
 body.ready .hero .fx{opacity:1;transform:none}
 
 /* One seascape, cut at the horizon. The hero keeps the sky and mountains; the footer gets the ocean. */
-.hero{position:relative;isolation:isolate;overflow:clip;--ih:max(56.25vw,400px);padding-bottom:calc(var(--ih) * .3)}
-.hero-bg{position:absolute;left:0;right:0;bottom:0;height:calc(var(--ih) * .72);z-index:-1;pointer-events:none;
+.hero{position:relative;isolation:isolate;overflow:clip;display:flex;flex-direction:column;
+  min-height:calc(87vh - var(--navh));min-height:calc(87svh - var(--navh));
+  --ih:max(56.25vw,460px,min(66svh,125vw));--lift:clamp(4px,1.2svh,16px);
+  padding-top:clamp(16px,5svh,72px);padding-bottom:calc(var(--ih) * .12 + var(--lift))}
+.hero > .wrap{width:100%}
+.hero-bg{position:absolute;left:0;right:0;bottom:var(--lift);height:calc(var(--ih) * .66);z-index:-1;pointer-events:none;
   background:url("hero.jpg") 62% 0/auto var(--ih) no-repeat;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 24%,#000 80%,transparent 100%);
-  mask-image:linear-gradient(to bottom,transparent 0,#000 24%,#000 80%,transparent 100%)}
-@media (max-width:700px){.hero-bg{background-image:url("hero-sm.jpg");background-position:66% 0}}
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 84%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 84%,transparent 100%)}
+/* Portrait screens: drop the empty sky from the picture so the mountains rise toward the copy. */
+@media (orientation:portrait){.hero-bg{height:calc(var(--ih) * .40);background-position:68% calc(var(--ih) * -.33)}}
+@media (max-width:700px){.hero{--ih:max(56.25vw,620px)}.hero-bg{background-image:url("hero-sm.jpg")}}
 
 /* ---------- agents row ---------- */
-.agents{padding:clamp(40px,6vw,72px) 0 0}
+.agents{padding:clamp(32px,6vw,72px) 0 0}
 .agents .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:20px clamp(24px,5vw,56px)}
 .agents p{font:400 13px/1 var(--font-mono);color:var(--ink-3);margin-right:8px}
 .agent{display:inline-flex;align-items:center;gap:10px;font-weight:500;font-size:16px}
@@ -246,8 +253,8 @@ footer li a:hover{color:var(--ink)}
 }
 /* Short landscape screens (phones on their side): trim the vertical chrome. */
 @media (max-height:500px) and (orientation:landscape){
+  :root{--navh:52px}
   .nav .wrap{min-height:52px}
-  .hero{padding-top:20px}
   .lead{margin-top:14px}
   .hero .btn-row{margin-top:20px}
 }
