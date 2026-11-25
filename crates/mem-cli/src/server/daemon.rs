@@ -205,6 +205,18 @@ pub async fn run_foreground(cfg: Config) -> Result<()> {
     Ok(())
 }
 
+#[cfg(unix)]
+fn process_alive(pid: u32) -> bool {
+    // SAFETY: signal 0 only checks that the process exists.
+    let rc = unsafe { libc::kill(pid as libc::pid_t, 0) };
+    rc == 0 || std::io::Error::last_os_error().raw_os_error() != Some(libc::ESRCH)
+}
+
+#[cfg(not(unix))]
+fn process_alive(_pid: u32) -> bool {
+    false
+}
+
 /// `agent-mem stop`.
 pub async fn stop(cfg: &Config) -> Result<()> {
     let pid: Option<u32> = std::fs::read_to_string(cfg.pid_path())
@@ -237,8 +249,10 @@ pub async fn stop(cfg: &Config) -> Result<()> {
     {
         return Err(anyhow!("`stop` is only supported on unix; kill pid {pid}"));
     }
+    // The port closes before shutdown finishes (access flush, index checkpoint), so wait for
+    // the process itself to exit; otherwise a restart could race the old daemon's last writes.
     for _ in 0..100 {
-        if health(&http, &cfg.addr).await == Health::Down {
+        if health(&http, &cfg.addr).await == Health::Down && !process_alive(pid) {
             println!("agent-mem daemon stopped");
             return Ok(());
         }

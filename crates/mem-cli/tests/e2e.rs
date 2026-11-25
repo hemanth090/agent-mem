@@ -129,6 +129,17 @@ impl ProxyProc {
     }
 }
 
+/// Polls until exactly `n` daemons for `data_dir` exist (shutdown and spawn are asynchronous).
+fn wait_for_daemons(data_dir: &Path, n: usize) -> usize {
+    for _ in 0..100 {
+        if daemon_processes(data_dir) == n {
+            return n;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(100));
+    }
+    daemon_processes(data_dir)
+}
+
 fn daemon_processes(data_dir: &Path) -> usize {
     let out = Command::new("ps")
         .args(["-axo", "command"])
@@ -258,7 +269,7 @@ fn memory_survives_daemon_restart() {
         "{}",
         String::from_utf8_lossy(&out.stderr)
     );
-    assert_eq!(daemon_processes(&env.data_dir), 0);
+    assert_eq!(wait_for_daemons(&env.data_dir, 0), 0);
 
     // New proxy auto-spawns a fresh daemon that reloads index + db.
     let mut p = ProxyProc::spawn(&env);
