@@ -14,8 +14,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://hemanth090.github.io/agent-mem/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preload" href="hero.jpg" as="image" media="(min-width:701px)">
-<link rel="preload" href="hero-sm.jpg" as="image" media="(max-width:700px)">
 <link rel="preload" href="fonts/InterTight-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/JetBrainsMono-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -101,16 +99,10 @@ body.ready .hero h1 .ln > span{transform:none}
 .hero .fx{opacity:0;transform:translateY(14px);transition:opacity .8s var(--ease) .25s,transform .8s var(--ease) .25s}
 body.ready .hero .fx{opacity:1;transform:none}
 
-/* seascape background. The picture's own sky is blank, so the copy sits on it; its top and bottom edges fade to white. */
-.hero{position:relative;isolation:isolate;overflow:clip;padding-bottom:max(220px,27vw)}
-.hero-bg{position:absolute;left:0;right:0;bottom:clamp(28px,5vw,72px);z-index:-1;height:clamp(320px,56.25vw,900px);pointer-events:none;
-  background:url("hero.jpg") 62% 100%/cover no-repeat;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 26%,#000 93%,transparent 100%);
-  mask-image:linear-gradient(to bottom,transparent 0,#000 26%,#000 93%,transparent 100%)}
-@media (max-width:700px){.hero-bg{background-image:url("hero-sm.jpg");background-position:66% 100%}}
+.hero{padding-bottom:clamp(24px,4vw,48px)}
 
 /* ---------- agents row ---------- */
-.agents{padding:clamp(40px,6vw,72px) 0 0;margin-top:calc(-1 * clamp(28px,5vw,72px))}
+.agents{padding:clamp(40px,6vw,72px) 0 0}
 .agents .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:20px clamp(24px,5vw,56px)}
 .agents p{font:400 13px/1 var(--font-mono);color:var(--ink-3);margin-right:8px}
 .agent{display:inline-flex;align-items:center;gap:10px;font-weight:500;font-size:16px}
@@ -200,7 +192,12 @@ code.i{font-size:14px;white-space:nowrap}
 .close h2{max-width:16ch}
 .close .btn-row{margin-top:32px}
 
-footer{background:var(--tint);padding:clamp(48px,6vw,80px) 0 32px;color:var(--ink-2);font-size:15px}
+/* footer: the seascape from the mountains down to the waves. Copy sits on the blank sky above it. */
+footer{--scene:clamp(250px,34vw,540px);position:relative;isolation:isolate;overflow:clip;background:#faf9f3;padding:clamp(56px,7vw,96px) 0 var(--scene);color:var(--ink-2);font-size:15px}
+footer::before{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--scene);z-index:-1;pointer-events:none;
+  background:url("hero.jpg") 62% 100%/cover no-repeat;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 30%);mask-image:linear-gradient(to bottom,transparent 0,#000 30%)}
+@media (max-width:700px){footer::before{background-image:url("hero-sm.jpg");background-position:66% 100%}}
 .foot-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
 .foot-brand .logo{color:var(--ink)}
 .foot-brand p{margin-top:14px;max-width:30ch;line-height:1.55}
@@ -208,7 +205,7 @@ footer h4{margin-bottom:10px;font:500 12px/1.4 var(--font-mono);color:var(--ink-
 footer ul{list-style:none}
 footer li a{display:inline-block;padding:7px 0;transition:color .15s}
 footer li a:hover{color:var(--ink)}
-.foot-base{margin-top:clamp(40px,6vw,64px);font:400 13px/1.5 var(--font-mono);color:var(--ink-3)}
+.foot-base{margin-top:clamp(32px,5vw,56px);font:400 13px/1.5 var(--font-mono);color:var(--ink-3)}
 
 @media (min-width:820px){
   .foot-grid{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr);gap:56px}
@@ -247,7 +244,6 @@ footer li a:hover{color:var(--ink)}
 
 <main id="main">
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero-bg" aria-hidden="true"></div>
   <div class="wrap">
     <h1 id="hero-title"><span class="ln"><span>Shared memory</span></span><span class="ln"><span>for coding agents.</span></span></h1>
     <p class="lead fx">A local memory server for Claude Code, OpenCode, Codex and Antigravity. Recall takes under 10 ms, and nothing leaves your machine.</p>
