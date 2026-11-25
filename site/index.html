@@ -63,7 +63,7 @@ svg{display:block}
 .logo:hover .r2{transform:scale(1.14) rotate(8deg)}
 .logo:hover .dot{transform:scale(.8)}
 .nav ul{display:flex;gap:2px;list-style:none}
-.nav li a{display:inline-block;padding:10px 12px;font-size:15px;color:var(--ink-2);transition:color .15s}
+.nav li a{display:inline-block;padding:10px 12px;font-size:14px;font-weight:450;letter-spacing:.015em;text-transform:uppercase;color:var(--ink-2);transition:color .15s}
 .nav li a:hover,.nav li a[aria-current="true"]{color:var(--ink)}
 .nav li a.gh{display:inline-flex;align-items:center;gap:10px;padding:6px 8px;margin-left:4px;border-radius:999px;color:var(--ink)}
 .gh-ic{width:24px;height:24px;flex:none}
@@ -93,7 +93,7 @@ svg{display:block}
 /* ---------- hero ---------- */
 .hero{padding-top:clamp(32px,6vw,72px)}
 .hero{text-align:center}
-.hero h1{max-width:13ch;margin-inline:auto;font-weight:350;font-size:clamp(38px,min(7vw,12svh),88px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
+.hero h1{max-width:13ch;margin-inline:auto;font-weight:350;font-size:clamp(38px,min(7vw,12svh),88px);line-height:1.02;letter-spacing:-.034em;text-wrap:balance}
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
 .hero h1 .ln > span{display:inline-block;transform:translateY(110%);transition:transform 1s var(--ease)}
 .hero h1 .ln:nth-child(2) > span{transition-delay:.1s}
@@ -124,7 +124,7 @@ body.ready .hero .fx{opacity:1;transform:none}
 
 /* ---------- sections ---------- */
 section.block{padding:clamp(72px,10vw,128px) 0}
-h2{font-weight:500;font-size:clamp(30px,3.6vw,46px);line-height:1.1;letter-spacing:-.022em}
+h2{font-weight:400;font-size:clamp(30px,4.2vw,54px);line-height:1.06;letter-spacing:-.024em;text-wrap:balance}
 .sec-lead{margin-top:16px;max-width:54ch;color:var(--ink-2)}
 
 /* tools */
@@ -166,9 +166,9 @@ h2{font-weight:500;font-size:clamp(30px,3.6vw,46px);line-height:1.1;letter-spaci
 
 /* speed */
 .fig{display:grid;grid-template-columns:minmax(0,1fr);gap:40px;margin-top:56px}
-.fig .v{font-weight:400;font-size:clamp(56px,8vw,104px);line-height:1;letter-spacing:-.025em}
+.fig .v{font-weight:300;font-size:clamp(56px,8vw,104px);line-height:1;letter-spacing:-.03em}
 .fig .v span{margin-left:.1em;font-size:.32em;letter-spacing:-.01em;color:var(--ink-2)}
-.fig h3{margin-top:16px;font-weight:500;font-size:17px}
+.fig h3{margin-top:16px;font-weight:500;font-size:17px;letter-spacing:-.005em}
 .fig p{margin-top:4px;color:var(--ink-2);font-size:15px;max-width:30ch}
 .foot{margin-top:40px;color:var(--ink-2);font-size:15px;max-width:64ch}
 code.i{font-size:14px;white-space:nowrap}
@@ -177,7 +177,7 @@ code.i{font-size:14px;white-space:nowrap}
 .steps{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;margin-top:48px}
 .step{background:var(--tint);border-radius:16px;padding:22px 64px 22px 22px;position:relative}
 .step .n{font:500 12px/1 var(--font-mono);color:var(--ink-3)}
-.step h3{margin-top:10px;font-weight:500;font-size:18px}
+.step h3{margin-top:10px;font-weight:500;font-size:18px;letter-spacing:-.005em}
 .step p{margin-top:6px;color:var(--ink-2);font-size:15px}
 .step pre{margin-top:14px;font:400 13px/1.7 var(--font-mono);white-space:pre-wrap;overflow-wrap:anywhere}
 .step .p{color:var(--ink-3);user-select:none}
