@@ -93,12 +93,12 @@ svg{display:block}
 /* ---------- hero ---------- */
 .hero{padding-top:clamp(32px,6vw,72px)}
 .hero{text-align:center}
-.hero h1{max-width:13ch;margin-inline:auto;font-weight:500;font-size:clamp(38px,min(7vw,12svh),88px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
+.hero h1{max-width:13ch;margin-inline:auto;font-weight:350;font-size:clamp(38px,min(7vw,12svh),88px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
 .hero h1 .ln > span{display:inline-block;transform:translateY(110%);transition:transform 1s var(--ease)}
 .hero h1 .ln:nth-child(2) > span{transition-delay:.1s}
 body.ready .hero h1 .ln > span{transform:none}
-.lead{margin-top:clamp(12px,2.6svh,24px);margin-inline:auto;max-width:48ch;text-wrap:balance;font-size:clamp(16px,1.5vw,19px);line-height:1.6;color:var(--ink-2)}
+.lead{font-weight:350;margin-top:clamp(12px,2.6svh,24px);margin-inline:auto;max-width:48ch;text-wrap:balance;font-size:clamp(16px,1.5vw,19px);line-height:1.6;color:var(--ink-2)}
 .hero .btn-row{margin-top:clamp(18px,3.6svh,32px);justify-content:center}
 .hero .fx{opacity:0;transform:translateY(14px);transition:opacity .8s var(--ease) .25s,transform .8s var(--ease) .25s}
 body.ready .hero .fx{opacity:1;transform:none}
@@ -110,10 +110,10 @@ body.ready .hero .fx{opacity:1;transform:none}
 .hero > .wrap{width:100%}
 /* The whole seascape fills the first screen. Copy sits on its blank sky; the top fades into the nav. */
 .hero-bg{position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:url("hero.jpg") 62% 100%/cover no-repeat;
+  background:url("hero.jpg") 62% 0/cover no-repeat;
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 18%);
   mask-image:linear-gradient(to bottom,transparent 0,#000 18%)}
-@media (max-width:700px){.hero-bg{background-image:url("hero-sm.jpg");background-position:68% 100%}}
+@media (max-width:700px){.hero-bg{background-image:url("hero-sm.jpg");background-position:68% 0}}
 
 /* ---------- agents row ---------- */
 .agents{padding:clamp(32px,6vw,72px) 0 0}
