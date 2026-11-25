@@ -1,0 +1,38 @@
+[package]
+name = "mem-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description.workspace = true
+
+[[bin]]
+name = "agent-mem"
+path = "src/main.rs"
+
+[dependencies]
+mem-core = { workspace = true }
+mem-embed = { workspace = true }
+mem-store = { workspace = true }
+tokio = { workspace = true }
+axum = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+toml_edit = { workspace = true }
+clap = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+fs2 = { workspace = true }
+dirs = { workspace = true }
+parking_lot = { workspace = true }
+uuid = { workspace = true }
+libc = "0.2"
+tempfile = { workspace = true }
+
+[dev-dependencies]
+tower = { workspace = true, features = ["util"] }
+
+[lints]
+workspace = true

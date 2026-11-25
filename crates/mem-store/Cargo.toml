@@ -1,0 +1,30 @@
+[package]
+name = "mem-store"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description.workspace = true
+
+[dependencies]
+mem-core = { workspace = true }
+mem-embed = { workspace = true }
+rusqlite = { workspace = true }
+usearch = { workspace = true }
+tokio = { workspace = true }
+parking_lot = { workspace = true }
+serde_json = { workspace = true }
+uuid = { workspace = true }
+regex = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
+criterion = { workspace = true }
+
+[[bench]]
+name = "retrieval"
+harness = false
+
+[lints]
+workspace = true

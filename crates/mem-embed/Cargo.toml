@@ -1,0 +1,21 @@
+[package]
+name = "mem-embed"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description.workspace = true
+
+[dependencies]
+mem-core = { workspace = true }
+fastembed = { workspace = true }
+lru = { workspace = true }
+parking_lot = { workspace = true }
+blake3 = { workspace = true }
+
+[lints]
+workspace = true
+
+[features]
+# Runs tests that load the real ONNX model (downloads it on first run).
+model-tests = []

@@ -1,0 +1,56 @@
+[workspace]
+resolver = "2"
+members = ["crates/mem-core", "crates/mem-embed", "crates/mem-store", "crates/mem-cli"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+rust-version = "1.80"
+repository = "https://github.com/hemanth090/agent-mem"
+description = "Local, shared, hybrid-search memory for coding agents"
+
+[workspace.dependencies]
+mem-core = { path = "crates/mem-core" }
+mem-embed = { path = "crates/mem-embed" }
+mem-store = { path = "crates/mem-store" }
+
+tokio = { version = "1", features = ["full"] }
+axum = "0.8"
+tower = "0.5"
+reqwest = { version = "0.13", default-features = false, features = ["json"] }
+rusqlite = { version = "0.43", features = ["bundled"] }
+usearch = "2"
+fastembed = { version = "7", default-features = false, features = ["onnx", "ort-download-binaries-rustls-tls", "hf-hub-rustls-tls", "onig"] }
+lru = "0.19"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+toml_edit = "0.25"
+clap = { version = "4", features = ["derive"] }
+parking_lot = "0.13"
+thiserror = "2"
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1", features = ["v7", "v4"] }
+blake3 = "1"
+fs2 = "0.4"
+dirs = "7"
+regex = "1"
+toml = "1"
+tempfile = "3"
+criterion = { version = "0.8", default-features = false, features = ["cargo_bench_support"] }
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+todo = "deny"
+unimplemented = "deny"
+
+[profile.release]
+# LTO is intentionally off: with thin/fat LTO the macOS link fails with an undefined
+# `___isPlatformVersionAtLeast` (the prebuilt ONNX Runtime needs it from compiler-builtins and
+# LTO drops it). The hot paths are C++ (ONNX Runtime, usearch, SQLite) so LTO buys little.
+lto = false
+codegen-units = 1
+strip = true
