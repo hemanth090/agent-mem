@@ -17,10 +17,12 @@
 <link rel="preload" href="hero.jpg" as="image" media="(min-width:701px)">
 <link rel="preload" href="hero-sm.jpg" as="image" media="(max-width:700px)">
 <link rel="preload" href="fonts/InterTight-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Geist-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/JetBrainsMono-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* Fonts are self-hosted (SIL OFL): visitors make no request to Google. Inter Tight for text, JetBrains Mono for code and labels. */
 @font-face{font-family:"Inter Tight";src:url("fonts/InterTight-var.woff2") format("woff2");font-weight:300 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist";src:url("fonts/Geist-var.woff2") format("woff2");font-weight:300 700;font-style:normal;font-display:swap}
 @font-face{font-family:"JetBrains Mono";src:url("fonts/JetBrainsMono-var.woff2") format("woff2");font-weight:400 600;font-style:normal;font-display:swap}
 
 /* ============================================================
@@ -93,7 +95,7 @@ svg{display:block}
 /* ---------- hero ---------- */
 .hero{padding-top:clamp(32px,6vw,72px)}
 .hero{text-align:center}
-.hero h1{max-width:13ch;margin-inline:auto;font-weight:300;font-size:clamp(38px,min(7vw,12svh),88px);line-height:1.02;letter-spacing:-.034em;text-wrap:balance}
+.hero h1{max-width:13ch;margin-inline:auto;font-family:"Geist","Inter Tight",ui-sans-serif,system-ui,sans-serif;font-weight:300;font-size:clamp(38px,min(7vw,12svh),88px);line-height:1.02;letter-spacing:-.034em;text-wrap:balance}
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
 .hero h1 .ln > span{display:inline-block;transform:translateY(110%);transition:transform 1s var(--ease)}
 .hero h1 .ln:nth-child(2) > span{transition-delay:.1s}
