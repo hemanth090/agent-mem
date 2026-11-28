@@ -39,6 +39,7 @@
   --ink-2:#5f5f5f;       /* 6.3:1 on white */
   --ink-3:#767676;       /* 4.5:1 on white, smallest labels only */
   --ink-soft:#2b2b2b;    /* primary button hover */
+  --glass:rgba(255,255,255,.62); /* frosted popup surface, tinted by what sits behind it */
 
   /* type: families */
   --font-sans:"Inter Tight","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
@@ -222,6 +223,11 @@ code.i{font-size:var(--fs-sm);white-space:nowrap}
 .copy.is-copied{color:var(--ink)}
 .copy.is-copied [data-idle]{display:none}
 .copy.is-copied [data-done]{display:block}
+/* copy feedback: a glass pill that picks up whatever it floats over */
+.toast{position:fixed;left:50%;bottom:max(var(--s5),env(safe-area-inset-bottom));z-index:30;display:inline-flex;align-items:center;gap:var(--s2);padding:var(--s2) var(--s4);border-radius:var(--r-pill);background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);font:var(--fw-medium) var(--fs-sm)/var(--lh-ui) var(--font-sans);color:var(--ink);opacity:0;pointer-events:none;transform:translate(-50%,var(--s2));transition:opacity var(--dur-2),transform var(--dur-2) var(--ease)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast svg{width:var(--ic-sm);height:var(--ic-sm)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.toast{background:rgba(255,255,255,.94)}}
 .chips{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s6)}
 .chip{background:var(--tint);border-radius:var(--r-pill);padding:var(--s2) var(--s4);font:var(--fw-regular) var(--fs-sm)/var(--lh-ui) var(--font-sans);color:var(--ink-2)}
 
@@ -528,6 +534,11 @@ footer li a:hover{color:var(--ink)}
 
 <div class="sr-only" role="status" aria-live="polite" id="copyStatus"></div>
 
+<div class="toast" id="toast" aria-hidden="true">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path id="toastPath" d="M3 8.5l3.2 3.2L13 4.8"/></svg>
+  <span id="toastText">Copied</span>
+</div>
+
 <script>
 (function(){
 "use strict";
@@ -633,11 +644,19 @@ var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
 })();
 
 var status=$("#copyStatus");
+var toast=$("#toast"),toastText=$("#toastText"),toastPath=$("#toastPath"),toastTimer=null;
+function toastShow(msg,ok){
+  toastText.textContent=msg;
+  toastPath.setAttribute("d",ok?"M3 8.5l3.2 3.2L13 4.8":"M4.5 4.5l7 7M11.5 4.5l-7 7");
+  toast.classList.add("show");clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){toast.classList.remove("show")},1800);
+}
 function fallback(text){var ta=document.createElement("textarea");ta.value=text;ta.setAttribute("readonly","");ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand("copy")}catch(e){}document.body.removeChild(ta);return ok}
 function copy(text){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(text).then(function(){return true},function(){return fallback(text)});return Promise.resolve(fallback(text))}
 $$("button.copy").forEach(function(b){var label=b.getAttribute("aria-label");
   b.addEventListener("click",function(){copy(b.getAttribute("data-copy")).then(function(ok){
-    status.textContent=ok?"Copied to clipboard":"Copy failed, select the text and copy it manually";if(!ok)return;
+    status.textContent=ok?"Copied to clipboard":"Copy failed, select the text and copy it manually";
+    toastShow(ok?"Copied":"Copy failed",ok);if(!ok)return;
     b.classList.add("is-copied");b.setAttribute("aria-label","Copied");
     setTimeout(function(){b.classList.remove("is-copied");b.setAttribute("aria-label",label)},2000)})})});
 })();
